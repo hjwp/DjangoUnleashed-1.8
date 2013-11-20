@@ -13,6 +13,9 @@ class Tag(models.Model):
         unique=True,
         help_text='A label for URL config.')
 
+    class Meta:
+        ordering = ['name']
+
     def __str__(self):
         return self.name
 
@@ -42,4 +45,5 @@ class NewsLink(models.Model):
     startup = models.ForeignKey(Startup)
 
     def __str__(self):
-        return "{}: {}".format(self.startup, self.title)
+        return "{}: {}".format(
+            self.startup, self.title)
