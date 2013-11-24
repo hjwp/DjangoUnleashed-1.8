@@ -1,0 +1,51 @@
+<article>
+
+  <h2>{{ startup.name }}</h2>
+  <dl>
+    <dt>Date Founded</dt>
+      <dd>{{ startup.founded_date }}</dd>
+    <dt>Website</dt>
+      <dd>{{ startup.website }}</dd>
+    <dt>Contact</dt>
+      <dd>{{ startup.contact }}</dd>
+
+      <dt>Tag{{ startup.tags.count|pluralize }}</dt>
+        <dd>
+          <ul>
+            {% for tag in startup.tags.all %}
+              <li><a href="">
+                {{ tag.name|title }}
+              </a></li>
+            {% endfor %}
+          </ul>
+        </dd>
+
+  </dl>
+
+  <p>{{ startup.description }}</p>
+
+    <section>
+      <h3>Recent News</h3>
+      <ul>
+        {% for newslink in startup.newslink_set.all %}
+          <li>
+            <a href="{{ newslink.link }}">
+              {{ newslink.title|title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section>
+      <h3>Blog Articles</h3>
+      <ul>
+        {% for post in startup.blog_posts.all %}
+          <li>
+            <a href="">
+              {{ post.title|title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+</article>
