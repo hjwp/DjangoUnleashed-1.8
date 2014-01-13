@@ -1,5 +1,6 @@
 from django.shortcuts import (
     get_object_or_404, redirect, render)
+from django.views.generic import View
 
 from .forms import TagForm
 from .models import Startup, Tag
@@ -21,32 +22,26 @@ def startup_list(request):
         {'startup_list': Startup.objects.all()})
 
 
-def tag_create(request):
-    # If the form has been submitted...
-    if request.method == 'POST':
-        # Bind the form to the POST data
-        form = TagForm(request.POST)
-        # If validation rules pass
-        if form.is_valid():
-            # Create new tag object
-            new_tag = form.save()
-            # Redirect to new Tag
-            # uses Tag.get_absolute_url
+class TagCreate(View):
+    form_class = TagForm
+    template_name = 'organizer/tag_form.html'
+
+    def get(self, request):
+        return render(
+            request,
+            self.template_name,
+            {'form': self.form_class()})
+
+    def post(self, request):
+        bound_form = self.form_class(request.POST)
+        if bound_form.is_valid():
+            new_tag = bound_form.save()
             return redirect(new_tag)
-        # implicit else:
-        #   bound form (with errors)
-        #   passed back to template (line 45)
-    # if request.method != POST
-    else:
-        # create an unbound form instance
-        form = TagForm()
-    # return either:
-    #     (1) the bound+invalid form on line 27
-    #     (2) the unbound form from line 41
-    return render(
-        request,
-        'organizer/tag_form.html',
-        {'form': form})
+        else:
+            return render(
+                request,
+                self.template_name,
+                {'form': bound_form})
 
 
 def tag_detail(request, slug):
