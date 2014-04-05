@@ -18,7 +18,7 @@ def post_detail(request, year, month, slug):
 
 
 class PostList(View):
-    template = 'blog/post_list.html'
+    template = ''
 
     def get(self, request):
         return render(
