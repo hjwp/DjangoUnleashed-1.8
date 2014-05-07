@@ -18,7 +18,8 @@ class SlugCleanMixin:
             self.cleaned_data['slug'].lower())
         if new_slug == 'create':
             raise ValidationError(
-                'Slug may not be "create".')
+                'Slug may not be '
+                '"<strong>create</strong>".')
         return new_slug
 
 
