@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.utils.safestring import mark_safe
 
 from .models import NewsLink, Startup, Tag
 
@@ -18,8 +19,9 @@ class SlugCleanMixin:
             self.cleaned_data['slug'].lower())
         if new_slug == 'create':
             raise ValidationError(
-                'Slug may not be '
-                '"<strong>create</strong>".')
+                mark_safe(
+                    'Slug may not be '
+                    '"<strong>create</strong>".'))
         return new_slug
 
 
