@@ -1,10 +1,15 @@
 from django.shortcuts import (
     get_object_or_404, redirect, render)
 from django.views.generic import (
-    CreateView, ListView, View)
+    CreateView, ListView, View, YearArchiveView)
 
 from .forms import PostForm
 from .models import Post
+
+
+class PostArchiveYear(YearArchiveView):
+    model = Post
+    date_field = 'pub_date'
 
 
 class PostCreate(CreateView):
