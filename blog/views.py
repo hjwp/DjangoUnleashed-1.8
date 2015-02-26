@@ -1,10 +1,17 @@
 from django.shortcuts import (
     get_object_or_404, redirect, render)
 from django.views.generic import (
-    CreateView, ListView, View, YearArchiveView)
+    CreateView, ListView, MonthArchiveView,
+    View, YearArchiveView)
 
 from .forms import PostForm
 from .models import Post
+
+
+class PostArchiveMonth(MonthArchiveView):
+    model = Post
+    date_field = 'pub_date'
+    month_format = '%m'
 
 
 class PostArchiveYear(YearArchiveView):
