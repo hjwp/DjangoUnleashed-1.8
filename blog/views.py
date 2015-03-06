@@ -4,6 +4,8 @@ from django.views.generic import (
     ArchiveIndexView, CreateView, DetailView,
     MonthArchiveView, View, YearArchiveView)
 
+from core.utils import UpdateView
+
 from .forms import PostForm
 from .models import Post
 from .utils import PostGetMixin
@@ -64,42 +66,6 @@ class PostList(ArchiveIndexView):
     template_name = 'blog/post_list.html'
 
 
-class PostUpdate(View):
+class PostUpdate(UpdateView):
     form_class = PostForm
     model = Post
-    template_name = 'blog/post_form_update.html'
-
-    def get(self, request, year, month, slug):
-        post = get_object_or_404(
-            Post,
-            pub_date__year=year,
-            pub_date__month=month,
-            slug=slug)
-        context = {
-            'form': self.form_class(
-                instance=post),
-            'post': post,
-        }
-        return render(
-            request, self.template_name, context)
-
-    def post(self, request, year, month, slug):
-        post = get_object_or_404(
-            Post,
-            pub_date__year=year,
-            pub_date__month=month,
-            slug=slug)
-        bound_form = self.form_class(
-            request.POST, instance=post)
-        if bound_form.is_valid():
-            new_post = bound_form.save()
-            return redirect(new_post)
-        else:
-            context = {
-                'form': bound_form,
-                'post': post,
-            }
-            return render(
-                request,
-                self.template_name,
-                context)
