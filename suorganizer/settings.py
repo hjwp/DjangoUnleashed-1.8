@@ -91,6 +91,12 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.8/topics/email/
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+SERVER_EMAIL = 'contact@getorganized.com'
+DEFAULT_FROM_EMAIL = 'no-reply@getorganized.com'
+EMAIL_SUBJECT_PREFIX = '[GetOrganized] '
+MANAGERS = (
+    ('Us', 'ourselves@getorganized.com'),
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
