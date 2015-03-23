@@ -10,10 +10,15 @@ from django.utils.text import slugify
 class Profile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL)
+    name = models.CharField(
+        max_length=255)
     slug = models.SlugField(
         max_length=30,
         unique=True)
     about = models.TextField()
+    joined = models.DateTimeField(
+        "Date Joined",
+        auto_now_add=True)
 
     def __str__(self):
         return self.user.get_username()
@@ -59,3 +64,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_absolute_url(self):
         return self.profile.get_public_url()
+
+    def get_full_name(self):
+        return self.profile.name
+
+    def get_short_name(self):
+        return self.profile.name
