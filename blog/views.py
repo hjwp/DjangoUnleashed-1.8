@@ -18,10 +18,9 @@ def post_detail(request, year, month, slug):
 
 
 class PostList(View):
-    template = ''
 
     def get(self, request):
         return render(
             request,
-            self.template,
+            'blog/post_list.html',
             {'post_list': Post.objects.all()})
