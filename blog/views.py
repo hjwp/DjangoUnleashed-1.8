@@ -9,16 +9,21 @@ from user.decorators import \
 
 from .forms import PostForm
 from .models import Post
-from .utils import DateObjectMixin
+from .utils import (
+    AllowFuturePermissionMixin, DateObjectMixin)
 
 
-class PostArchiveMonth(MonthArchiveView):
+class PostArchiveMonth(
+        AllowFuturePermissionMixin,
+        MonthArchiveView):
     model = Post
     date_field = 'pub_date'
     month_format = '%m'
 
 
-class PostArchiveYear(YearArchiveView):
+class PostArchiveYear(
+        AllowFuturePermissionMixin,
+        YearArchiveView):
     model = Post
     date_field = 'pub_date'
     make_object_list = True
@@ -46,9 +51,10 @@ class PostDetail(DateObjectMixin, DetailView):
     model = Post
 
 
-class PostList(ArchiveIndexView):
+class PostList(
+        AllowFuturePermissionMixin,
+        ArchiveIndexView):
     allow_empty = True
-    allow_future = True
     context_object_name = 'post_list'
     date_field = 'pub_date'
     make_object_list = True
