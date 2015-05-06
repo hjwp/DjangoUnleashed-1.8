@@ -1,0 +1,15 @@
+{% extends parent_template|default:"user/base_user.html" %}
+
+{% block title %}
+{{ block.super }} -
+{{ profile.user.get_username }}'s Profile
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+      <div class="offset-by-two five columns">
+        <h2>About {{ profile.user.get_username }}</h2>
+        {{ profile.about|default:"No Profile"|linebreaks }}
+      </div>
+  </div>
+{% endblock %}
