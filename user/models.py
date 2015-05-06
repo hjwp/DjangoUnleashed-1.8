@@ -16,3 +16,6 @@ class Profile(models.Model):
 
     def get_absolute_url(self):
         return reverse('dj-auth:profile')
+
+    def get_update_url(self):
+        return reverse('dj-auth:profile_update')
