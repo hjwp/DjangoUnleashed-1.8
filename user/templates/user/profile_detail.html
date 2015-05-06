@@ -7,6 +7,7 @@
 
 {% block content %}
   <div class="row">
+    {% if user.pk == profile.user.pk %}
       <div class="offset-by-two five columns">
         <h2>About {{ profile.user.get_username }}</h2>
         {{ profile.about|default:"No Profile"|linebreaks }}
@@ -21,5 +22,11 @@
             Disable Account</a></li>
         </ul>
       </div>
+    {% else %}
+      <div class="offset-by-two eight columns">
+        <h2>About {{ profile.user.get_username }}</h2>
+        {{ profile.about|default:"No Profile"|linebreaks }}
+      </div>
+    {% endif%}
   </div>
 {% endblock %}

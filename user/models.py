@@ -19,3 +19,8 @@ class Profile(models.Model):
 
     def get_update_url(self):
         return reverse('dj-auth:profile_update')
+
+    def get_public_url(self):
+        return reverse(
+            'dj-auth:public_profile',
+            kwargs={'slug': self.slug})
