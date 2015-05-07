@@ -12,6 +12,10 @@ from .views import (
     DisableAccount, ResendActivationEmail)
 
 password_urls = [
+    url(r'^$',
+        RedirectView.as_view(
+            pattern_name='dj-auth:pw_reset_start',
+            permanent=False)),
     url(r'^change/$',
         auth_views.password_change,
         {'template_name':
@@ -63,6 +67,11 @@ urlpatterns = [
     url(r'^$',
         RedirectView.as_view(
             pattern_name='dj-auth:login',
+            permanent=False)),
+    url(r'^activate/$',
+        RedirectView.as_view(
+            pattern_name=(
+                'dj-auth:resend_activation'),
             permanent=False)),
     url(r'^activate/'
         r'(?P<uidb64>[0-9A-Za-z_\-]+)/'
