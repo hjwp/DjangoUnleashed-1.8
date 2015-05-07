@@ -61,6 +61,11 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'suorganizer.urls'
 
+# User
+# https://docs.djangoproject.com/en/1.8/topics/auth/customizing/#substituting-a-custom-user-model
+
+AUTH_USER_MODEL = 'user.User'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
