@@ -35,6 +35,46 @@ class Profile(models.Model):
             kwargs={'slug': self.slug})
 
 
+class UserManager(BaseUserManager):
+    use_in_migrations = True
+
+    def _create_user(
+            self, name, email, passwrd, **kwargs):
+        email = self.normalize_email(email)
+        is_staff = kwargs.pop('is_staff', False)
+        is_superuser = kwargs.pop(
+            'is_superuser', False)
+        user = self.model(
+            email=email,
+            is_active=True,
+            is_staff=is_staff,
+            is_superuser=is_superuser,
+            **kwargs)
+        user.set_password(passwrd)
+        user.save(using=self._db)
+        Profile.objects.create(
+            name=name,
+            user=user,
+            slug=slugify(name))
+        return user
+
+    def create_user(
+            self, name, email, password=None,
+            **extra_fields):
+        return self._create_user(
+            name, email, password,
+            is_staff=False, is_superuser=False,
+            **extra_fields)
+
+    def create_superuser(
+            self, name, email, password,
+            **extra_fields):
+        return self._create_user(
+            name, email, password,
+            is_staff=True, is_superuser=True,
+            **extra_fields)
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         'email address',
